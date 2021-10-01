@@ -1,0 +1,37 @@
+---
+# Deployment details
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sl-asses6-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sl-asses6-2
+  template:
+    metadata:
+      name: sl-asses6-2
+      labels:
+        app: sl-asses6-2
+    spec:
+      containers:
+      - image: gcr.io/rapid-rite-321015/israqtcs/slwebapp
+        name: sl-asses6-cont
+        ports:
+          - containerPort: 8080
+---
+# Service details
+apiVersion: v1
+kind: Service
+metadata:
+  name: sl-asses6-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: sl-asses6-2
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
